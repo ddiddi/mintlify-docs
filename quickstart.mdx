@@ -1,72 +1,48 @@
 ---
 title: "Quickstart"
-description: "Get solo server up and running quickly with this step-by-step guide."
+description: "Start building awesome apps in under 5 minutes with solo server.
+
+This guide walks you through setting up your development environment, downloading your models and containers locally, and deploying them. "
 ---
 
-## Setup your development
+## 1. Installation Using pip
 
-Learn how to update your docs locally and deploy them to the public.
+Solo Server is available as a Python package. Install it with:
 
-### Edit and preview
+```
+pip install solo-server
+```
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
+<Card title="Github Repo" icon="bolt" href="https://github.com/GetSoloTech/solo-server">
+  GetSoloTech/solo-server
+</Card>
 
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: `npm i -g mintlify`
-    2\. Run the following command at the root of your documentation (where
-    `mint.json` is): `mintlify dev`
-  </Accordion>
-</AccordionGroup>
+## 2. Set Up Your Solo Environment
 
-### Deploy your changes
+Initialize your environment with:
 
-<AccordionGroup>
-  <Accordion icon="message-bot" title="Install our Github app">
-    Our Github app automatically deploys your changes to your docs site, so you
-    don't need to manage deployments yourself. You can find the link to install on
-    your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-    successfully installed, there should be a check mark next to the commit hash
-    of the repo.
-  </Accordion>
+```
+solo setup
+```
 
-  <Accordion icon="rocket" title="Push your changes">
-    [Commit and push your changes to
-    Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-    for your changes to update in your docs site. If you push and don't see that
-    the Github app successfully deployed your changes, you can also manually
-    update your docs through our [dashboard](https://dashboard.mintlify.com).
-  </Accordion>
-</AccordionGroup>
+This command guides you through the initial configuration, ensuring that your local environment is correctly set up for building and deploying your documentation.
 
-## Update your docs
+## 3. Download Your First Model
 
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
+Fetch your model huggingface identifier:
 
-<CardGroup>
-  <Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-    Add flair to your docs with personalized branding.
-  </Card>
+```
+solo download deepseek-ai/DeepSeek-R1
+```
 
-  <Card title="Add API Endpoints" icon="square-code" href="/api-playground/configuration">
-    Implement your OpenAPI spec and enable API user interaction.
-  </Card>
+This step downloads your models locally a&#x74;**`~/.cache/huggingface/hub using `**[**`huggingface download cli interface. `**](https://huggingface.co/docs/huggingface_hub/en/guides/download)
 
-  <Card title="Integrate Analytics" icon="chart-mixed" href="/analytics/supported-integrations">
-    Draw insights from user interactions with your documentation.
-  </Card>
+## 4. Run Solo Server
 
-  <Card title="Host on a Custom Domain" icon="browser" href="/settings/custom-domain/subdomain">
-    Keep your docs on your own website's subdomain.
-  </Card>
-</CardGroup>
+Start the server for H**ardware Aware Inference**:
+
+```
+solo run deepseek-ai/DeepSeek-R1
+```
+
+This command launches a local server (port at`http://localhost:5070`) where you can view your models inference in real time. As you make changes to your model deployment, the server will automatically update the preview.
