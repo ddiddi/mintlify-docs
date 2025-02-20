@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "prism",
+  "theme": "willow",
   "name": "Solo Documentation",
   "colors": {
     "primary": "#0D9373",
@@ -18,18 +18,20 @@
             "pages": [
               "introduction",
               "quickstart",
-              "tutorials"
+              "tutorials",
+              "development",
+              "advanced"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Concepts",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "concepts/markdown",
+              "concepts/code",
+              "concepts/images",
+              "concepts/settings",
+              "concepts/navigation",
+              "concepts/reusable-snippets"
             ]
           }
         ]
@@ -57,18 +59,18 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Website",
+          "href": "https://www.getsolo.tech",
+          "icon": "globe"
         },
         {
           "anchor": "Community",
           "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "icon": "discord"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://getsolotech.substack.com",
           "icon": "newspaper"
         }
       ]
