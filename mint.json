@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Solo Documentation",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -15,6 +15,9 @@
       "to": "#07C983"
     }
   },
+  {
+  "theme": "maple"
+},
   "topbarLinks": [
     {
       "name": "Support",
