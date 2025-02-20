@@ -1,9 +1,8 @@
 ---
-title: "Introduction"
-description: "Welcome to the home of Solo Documentation. 
+title: "Solo Docs"
+description: "Welcome to Solo Documentation. 
 
-These docs provides a clear, high-level view of the Solo, covering everything from installation and command usage to advanced topics and contributions. 
-"
+These docs provides a clear, high-level view of the Solo, covering everything from installation and command usage to advanced topics and contributions.  "
 ---
 
 <img alt="Solo Light" title="Solo Logo" classname="block dark:hidden" src="/SOLO(2).jpg" />
@@ -15,8 +14,6 @@ These docs provides a clear, high-level view of the Solo, covering everything fr
 Solo is an open-source platform for **Hardware Aware Inference**.&#x20;
 
 Using Solo, you can easily set up your environment, download and serve models, benchmark performance, fine-tune, ensemble, distill, and deploy across a variety of inference engines and platforms.&#x20;
-
-Simply using Solo Server.&#x20;
 
 <CardGroup cols={1}>
   <Card title="Quickstart" icon="download" href="https://mintlify.com/docs/quickstart">
@@ -34,22 +31,55 @@ Simply using Solo Server.&#x20;
 
 ## Why Use Solo?
 
-Update your docs to your brand and add valuable content for the best user conversion.
+Solo Server is designed to meet the evolving needs of effective AI deoloyment by focusing on several key differentiators:
 
 <CardGroup cols={2}>
   <Card title="Hardware Aware" icon="screwdriver-wrench" href="https://mintlify.com/docs/settings/global">
-    Customize your docs to your company's colors and brands
+    * Solo Server dynamically adjusts its operations and configs based on the underlying hardware
   </Card>
 
   <Card title="Domain Specific" icon="code" href="https://mintlify.com/docs/api-playground/openapi">
-    Automatically generate endpoints from an OpenAPI spec
+    Designed to integrate seamlessly with domain-specific workflows, it accelerates deployment speed.
   </Card>
 
   <Card title="Performance Tuned" icon="bolt" href="https://mintlify.com/docs/components/accordion">
-    Build interactive features and designs to guide your users
+    Engineered for speed, Solo Server handles demanding workloads with optimized performance settings.
   </Card>
 
   <Card title="Private and Pragmatic" icon="lock" href="https://mintlify.com/customers">
-    Check out our showcase of our favorite documentation
+    Solo Server emphasizes privacy, allowing you to keep sensitive data local without compromising on performance or functionality.
   </Card>
 </CardGroup>
+
+## Prerequisites
+
+Before installing Solo Server, ensure your system meets the following prerequisites:
+
+### Software Requirements
+
+* **Docker:**
+
+
+
+
+  Solo Server is designed to run within a containerized environment. Make sure Docker is installed on your system.
+
+  * [Docker Installation Guide](https://www.docker.com/get-started/)
+
+### Hardware Requirements
+
+* **Processor:** At least a<u> 1 GHz CPU core</u> (more cores are recommended for production workloads).
+
+* **Memory:** Minimum of <u>2GB RAM</u> (4GB or more is recommended for smoother performance, especially under load).
+
+* **Storage:** Sufficient disk space for the Docker images, logs, and any persistent data (typically <u>10GB or more</u> depending on your usage).
+
+### Operating System Requirements
+
+* **Linux:** Ubuntu 18.04 or later, CentOS 7+, or equivalent distributions.
+
+* **macOS:** Version 10.13 or later.
+
+* **Windows:** Windows 10 or later (Docker Desktop required).
+
+These prerequisites ensure that Solo Server runs efficiently in your environment while leveraging containerization for consistent deployment.
