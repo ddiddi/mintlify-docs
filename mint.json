@@ -19,7 +19,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:ddiddi@getsolo.tech"
     }
   ],
   "topbarCtaButton": {
@@ -55,7 +55,7 @@
       "pages": [
         "introduction",
         "quickstart",
-        "development"
+        "tutorials"
       ]
     },
     {
@@ -85,8 +85,8 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/getsolotech",
+    "github": "https://github.com/getsolotech",
+    "linkedin": "https://linkedin.com/company/getsolotech"
   }
 }
