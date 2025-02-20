@@ -1,106 +1,114 @@
 ---
-title: 'Tutorials'
-description: 'Preview changes locally to update your docs'
+title: "Tutorials"
+description: "Here are some critical solo workflows to enhance your model deployment and optimization"
 ---
 
-<Info>
-  **Prerequisite**: Please install Node.js (version 19 or higher) before proceeding.
-</Info>
 
-Follow these steps to install and run Mintlify on your operating system:
 
-**Step 1**: Install Mintlify:
+**Step 1**: Benchmark Your Setup
+
+Begin by benchmarking your system to evaluate current performance metrics. This helps identify potential bottlenecks.
 
 <CodeGroup>
-
-  ```bash npm
-  npm i -g mintlify
+  ```bash bash
+  solo benchmark
   ```
-
-```bash yarn
-yarn global add mintlify
-```
-
 </CodeGroup>
 
-**Step 2**: Navigate to the docs directory (where the `mint.json` file is located) and execute the following command:
+*Example Output:*
 
-```bash
-mintlify dev
+```
+solo-server git:(vLLM) ✗ solo benchmark
+Enter server type (ollama, vllm, llama.cpp): ollama 
+Enter model name: llama3
+
+Starting Solo Server Benchmark for ollama  with model llama3...
+Running benchmarks... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  0% -:--:--╭──── Benchmark Results ────╮
+│ llama3                    │
+│ Response: 0.00 tokens/s   │
+│ Total: 0.00 tokens/s      │
+│                           │
+│ Stats:                    │
+│  - Response tokens: 0     │
+│  - Model load time: 0.00s │
+│  - Response time: 0.00s   │
+│  - Total time: 0.00s      │
+╰───────────────────────────╯
 ```
 
-A local preview of your documentation will be available at `http://localhost:3000`.
 
-### Custom Ports
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. To run Mintlify on port 3333, for instance, use this command:
+## Step 2: Generate Fine-Tuning Synthetic Data
+
+Based on the prompts, generate synthetic data that will be used to finetune your models and your server’s performance.
 
 ```bash
-mintlify dev --port 3333
+solo finetune gen
 ```
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+*Example Output:*
+
+
+
+## Step 3: Check Fine-Tuning Status
+
+Before running the fine-tuning process, verify the synthetic data is correctly formatted for fine tuning.
+
+```bash
+solo finetune status
+```
+
+*Example Output:*
+
+If you attempt to run solo on a port that's already in use, it will use the next available port:
 
 ```md
-Port 3000 is already in use. Trying 3001 instead.
+Port 5070 is already in use. Trying 5071 instead.
 ```
 
-## Mintlify Versions
+## Step 4: Run the Fine-Tuning Process
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local website doesn't align with the production version, please update the CLI:
+Execute the fine-tuning process to apply optimizations to your Solo Server setup.
 
 <CodeGroup>
-
-```bash npm
-npm i -g mintlify@latest
-```
-
-```bash yarn
-yarn global upgrade mintlify
-```
-
+  ```bash bash
+  solo finetune run
+  ```
 </CodeGroup>
 
-## Validating Links
+*Example Output:*
 
-The CLI can assist with validating reference links made in your documentation. To identify any broken links, use the following command:
-
-```bash
-mintlify broken-links
+```vim
+==((====))==  Unsloth 2025.2.4: Fast Llama patching. Transformers: 4.48.2.
+   \\   /|    GPU: Tesla T4. Max memory: 14.741 GB. Platform: Linux.
+O^O/ \_/ \    Torch: 2.5.1+cu124. CUDA: 7.5. CUDA Toolkit: 12.4. Triton: 3.1.0
+\        /    Bfloat16 = FALSE. FA [Xformers = 0.0.28.post3. FA2 = False]
+ "-____-"     Free Apache license: http://github.com/unslothai/unsloth
+Unsloth: Fast downloading is enabled - ignore downloading bars which are red colored!
 ```
 
-## Deployment
 
-<Tip>
-  Unlimited editors available under the [Pro
-  Plan](https://mintlify.com/pricing) and above.
-</Tip>
+
+## Step 5: Clean Up Old Artifacts
+
+Remove any outdated build artifacts or cache that may interfere with the new configuration.&#x20;
+
+```bash
+solo rm
+```
+
+*Example Output:*
 
 If the deployment is successful, you should see the following:
 
 <Frame>
-  <img src="/images/checks-passed.png" style={{ borderRadius: '0.5rem' }} />
+
 </Frame>
 
-## Code Formatting
+## Step 6: Serve Your Models On the Cloud
 
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
+```
+solo serve 
+```
 
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of mintlify: `npm remove -g mintlify`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall mintlify: `npm install -g mintlify`
-  </Accordion>
-
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the \~/.mintlify folder. Afterwards, run `mintlify dev` again.
-  </Accordion>
-</AccordionGroup>
-
-Curious about what changed in the CLI version? [Check out the CLI changelog.](https://www.npmjs.com/package/mintlify?activeTab=versions)
+This workflow ensures your Solo Server environment is optimized and ready for efficient, high-performance model deployment
