@@ -17,10 +17,7 @@
             "group": "Get Started",
             "pages": [
               "introduction",
-              "quickstart",
-              "tutorials",
-              "development",
-              "advanced"
+              "quickstart"
             ]
           },
           {
