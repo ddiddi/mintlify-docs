@@ -1,0 +1,201 @@
+---
+title: 'Fine-Tuning Workflow'
+description: 'Complete guide to generating synthetic data and fine-tuning models with Solo Server'
+icon: 'wand-magic-sparkles'
+---
+
+## Overview
+
+Solo Server provides a complete end-to-end workflow for fine-tuning language models, from synthetic data generation to model deployment. This guide will walk you through the entire process.
+
+The fine-tuning workflow consists of four main steps:
+1. Generate synthetic training data using Starfish API
+2. Monitor data generation progress
+3. Download and prepare the dataset
+4. Fine-tune your model using LoRA
+
+## Step 1: Generate Synthetic Data
+
+Solo Server integrates with Starfish API to generate high-quality synthetic training data. This is particularly useful when you need domain-specific or task-specific training data.
+
+<CodeGroup>
+  ```bash Generate data for customer service
+  solo finetune gen "Generate customer service conversations about product returns" --num-records 100
+  ```
+
+  ```bash Generate data for code generation
+  solo finetune gen "Generate Python code examples for data processing tasks" --num-records 50
+  ```
+</CodeGroup>
+
+The command will:
+- Send your prompt to the Starfish API
+- Generate the specified number of synthetic records
+- Return a job ID and project ID for tracking
+
+<Note>
+  The quality of your synthetic data depends heavily on the prompt. Be specific about:
+  - The domain or task
+  - The format of responses
+  - Any specific requirements or constraints
+</Note>
+
+## Step 2: Monitor Generation Progress
+
+Track the status of your data generation job:
+
+<CodeGroup>
+  ```bash Check status
+  solo finetune status <job-id>
+  ```
+</CodeGroup>
+
+Possible status values:
+- `PENDING`: Job is queued
+- `RUNNING`: Generation in progress
+- `COMPLETE`: Data is ready for download
+- `FAILED`: An error occurred
+
+<Tip>
+  For long-running jobs, you can use the `--watch` flag to automatically poll for status updates:
+  ```bash
+  solo finetune status <job-id> --watch
+  ```
+</Tip>
+
+## Step 3: Download Generated Data
+
+Once generation is complete, download your dataset:
+
+<CodeGroup>
+  ```bash Download data
+  solo finetune download <project-id> --output training_data.json
+  ```
+</CodeGroup>
+
+The downloaded data will be in JSON format, ready for fine-tuning. The file structure follows the standard format for language model training:
+
+```json
+{
+  "conversations": [
+    {
+      "input": "Customer: I need to return a product",
+      "output": "Agent: I'd be happy to help you with your return. Could you please provide your order number?"
+    },
+    // ... more examples
+  ]
+}
+```
+
+## Step 4: Fine-Tune Your Model
+
+Fine-tune a model using the generated data with LoRA (Low-Rank Adaptation):
+
+<CodeGroup>
+  ```bash Basic fine-tuning
+  solo finetune run training_data.json --output-dir ./my-finetuned-model
+  ```
+
+  ```bash Advanced fine-tuning
+  solo finetune run training_data.json \
+    --output-dir ./my-finetuned-model \
+    --epochs 3 \
+    --batch-size 4 \
+    --lora-r 16 \
+    --lora-alpha 32
+  ```
+</CodeGroup>
+
+### Fine-Tuning Parameters
+
+| Parameter | Description | Default | Recommended Range |
+|-----------|-------------|---------|------------------|
+| `--batch-size` | Training batch size | 1 | 1-8 |
+| `--epochs` | Number of training epochs | 2 | 1-5 |
+| `--lora-r` | LoRA attention dimension | 8 | 8-32 |
+| `--lora-alpha` | LoRA alpha parameter | 8 | 8-64 |
+| `--lora-dropout` | LoRA dropout value | 0.02 | 0.0-0.1 |
+| `--rebuild-image` | Force rebuild Docker image | False | - |
+
+<Warning>
+  Larger batch sizes and more epochs require more GPU memory. Start with default values and adjust based on your hardware capabilities.
+</Warning>
+
+## API Key Management
+
+Solo Server securely manages your Starfish API key through multiple methods:
+
+1. Environment Variable:
+   ```bash
+   export STARFISH_API_KEY=your_api_key
+   ```
+
+2. Configuration File:
+   ```bash
+   solo config set starfish_api_key your_api_key
+   ```
+
+3. Interactive Prompt:
+   If no key is found, Solo Server will prompt you to enter it securely.
+
+<Note>
+  The API key is stored securely and never exposed in logs or error messages.
+</Note>
+
+## Using Fine-Tuned Models
+
+After fine-tuning, you can serve your custom model:
+
+<CodeGroup>
+  ```bash Serve the model
+  solo serve -m ./my-finetuned-model
+  ```
+
+  ```bash Serve with specific backend
+  solo serve -m ./my-finetuned-model -s vllm
+  ```
+</CodeGroup>
+
+## Best Practices
+
+1. **Data Quality**
+   - Generate diverse examples
+   - Include edge cases
+   - Validate data format before fine-tuning
+
+2. **Model Selection**
+   - Start with a base model close to your target domain
+   - Consider model size vs. available GPU memory
+   - Use quantization for larger models
+
+3. **Training Process**
+   - Monitor training loss
+   - Use validation data if available
+   - Save checkpoints for longer training runs
+
+4. **Evaluation**
+   - Test the fine-tuned model on unseen examples
+   - Compare with base model performance
+   - Gather user feedback for iterative improvement
+
+## Troubleshooting
+
+Common issues and solutions:
+
+<Accordion title="Out of Memory Errors">
+  - Reduce batch size
+  - Use gradient checkpointing
+  - Enable model quantization
+</Accordion>
+
+<Accordion title="Poor Generation Quality">
+  - Improve prompt engineering
+  - Increase number of training examples
+  - Adjust LoRA parameters
+</Accordion>
+
+<Accordion title="API Connection Issues">
+  - Verify API key
+  - Check network connectivity
+  - Ensure proper rate limiting
+</Accordion> 
