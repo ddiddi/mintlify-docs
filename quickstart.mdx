@@ -1,48 +1,164 @@
+# Solo Server
+
+<div align="center">
+
+<img src="assets/logo/logo.png" alt="Solo Server Logo" width="180" />
+
+[![Python 3.9+](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/pypi/l/solo-server)](https://opensource.org/licenses/MIT)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/solo-server)](https://pypi.org/project/solo-server/)
+[![PyPI - Version](https://img.shields.io/pypi/v/solo-server)](https://pypi.org/project/solo-server/)
+
+**Solo Server** is a lightweight orchestration layer for **hardware‑aware inference**. Spin up Ollama, vLLM, or Llama.cpp back‑ends in seconds with an opinionated CLI and a consistent REST API.
+
+</div>
+
 ---
-title: "Quickstart"
-description: "Start building awesome apps in under 5 minutes with solo server.
 
-This guide walks you through setting up your development environment, downloading your models and containers locally, and deploying them. "
----
-
-## 1. Installation Using pip
-
-Solo Server is available as a Python package. Install it with:
-
-```
+```bash
+# Install
 pip install solo-server
-```
 
-<Card title="Github Repo" icon="bolt" href="https://github.com/GetSoloTech/solo-server">
-  GetSoloTech/solo-server
-</Card>
-
-## 2. Set Up Your Solo Environment
-
-Initialize your environment with:
-
-```
+# Interactive setup (detects hardware, writes solo.json)
 solo setup
 ```
 
-This command guides you through the initial configuration, ensuring that your local environment is correctly set up for building and deploying your documentation.
+<div align="center">
+  <img src="assets/logo/solostart.gif" alt="Solo Server setup demo" />
+</div>
 
-## 3. Download Your First Model
+---
 
-Fetch your model huggingface identifier:
+## ✨ Features
 
+| | |
+|---|---|
+| ⚡ **Seamless setup** | One‑command `solo setup` auto‑detects CPU/GPU/RAM and writes an optimised config |
+| 📚 **Open model registry** | Pull weights from Hugging Face, Ollama, or local GGUF bins |
+| 🖥️ **Cross‑platform** | macOS (Apple Silicon & Intel), Linux, Windows 10/11 |
+| 🛠️ **Configurable framework** | Tweak ports, back‑end, quantisation, & device mapping in `~/.solo_server/solo.json` |
+
+---
+
+## Table of Contents  
+- [Installation](#installation)  
+- [Commands](#commands)  
+- [REST API](#rest-api)  
+- [Configuration](#️-configuration-solojson)  
+- [Project inspiration](#-project-inspiration)
+
+---
+
+## Installation
+
+### 🔹 Prerequisites
+- **Docker** 🐳 — required for container back‑ends. [Install Docker](https://docs.docker.com/get-docker/)
+
+### 🔹 Install with **uv** (recommended)
+```bash
+# Install uv (see full instructions: https://docs.astral.sh/uv/getting-started/installation/)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create and activate a virtualenv
+uv venv
+source .venv/bin/activate  # Linux/macOS
+# .venv\Scripts\activate   # Windows PowerShell
+
+# Install Solo Server
+uv pip install solo-server
+
+# Run the interactive wizard
+solo setup
 ```
-solo download deepseek-ai/DeepSeek-R1
+The wizard **detects hardware**, **selects the optimal compute back‑end** (CUDA, HIP, Metal, CPU, …) and writes `solo.json`.
+
+---
+
+## Solo Server Block Diagram
+<div align="center">
+  <img src="assets/Solo Server.svg" width="900" />
+</div>
+
+---
+
+## Commands
+
+### Serve a model
+```bash
+solo serve -s ollama -m llama3.2
 ```
 
-This step downloads your models locally a&#x74;**`~/.cache/huggingface/hub using `**[**`huggingface download cli interface. `**](https://huggingface.co/docs/huggingface_hub/en/guides/download)
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-s, --server` | Back‑end: `ollama`, `vllm`, `llama.cpp` | `ollama` |
+| `-m, --model`  | Model name or path | — |
+| `-p, --port`   | HTTP port | 5070 |
 
-## 4. Run Solo Server
-
-Start the server for H**ardware Aware Inference**:
-
+### Test inference
+```bash
+solo test            # quick health‑check
+solo test --timeout 120  # increase timeout for large models
 ```
-solo run deepseek-ai/DeepSeek-R1
+
+### List models
+```bash
+solo list   # scans Hugging Face cache & Ollama store
 ```
 
-This command launches a local server (port at`http://localhost:5070`) where you can view your models inference in real time. As you make changes to your model deployment, the server will automatically update the preview.
+### Check server status
+```bash
+solo status
+```
+
+### Stop servers
+```bash
+solo stop   # gracefully shutdown running back‑ends
+```
+
+---
+
+## REST API
+Solo exposes a thin proxy so your code never needs to change when you swap back‑ends.
+
+### Ollama‑style endpoints
+```bash
+curl http://localhost:5070/api/generate -d '{
+  "model": "llama3.2",
+  "prompt": "Why is the sky blue?"
+}'
+```
+
+### OpenAI‑compatible endpoints (vLLM & Llama.cpp)
+```bash
+curl http://localhost:5070/v1/chat/completions -d '{
+  "model": "llama3.2",
+  "messages": [{"role": "user", "content": "Why is the sky blue?"}]
+}'
+```
+
+---
+
+## ⚙️ Configuration (`solo.json`)
+`solo setup` writes a machine‑specific config at `~/.solo_server/solo.json`. Edit it manually or rerun the wizard any time.
+```json
+{
+  "hardware": {
+    "use_gpu": true,
+    "compute_backend": "CUDA",
+    "gpu_memory": 6144.0
+  },
+  "server": {"type": "ollama", "default_port": 5070},
+  "active_model": {"server": "ollama", "name": "llama3.2:1b"}
+}
+```
+
+---
+
+## 📝 Project inspiration
+Solo Server stands on the shoulders of:
+- **uv** – blazing‑fast Python package manager
+- **llama.cpp**, **vLLM**, **Ollama** – state‑of‑the‑art inference back‑ends
+- **Hugging Face Hub**, **whisper.cpp**, **llamafile**, **podman**, **cog**
+
+If you find Solo useful, please ⭐ the repo!
+
