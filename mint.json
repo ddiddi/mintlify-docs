@@ -56,18 +56,16 @@
         "introduction",
         "quickstart",
         "tutorials",
+        "tutorials/benchmarking",
         "component"
       ]
     },
     {
       "group": "Concepts",
       "pages": [
-        "concepts/markdown",
-        "concepts/code",
-        "concepts/images",
-        "concepts/settings",
-        "concepts/navigation",
-        "concepts/reusable-snippets"
+        "concepts/usecases",
+        "concepts/hardware-aware",
+        "concepts/finetuning"
       ]
     },
     {
