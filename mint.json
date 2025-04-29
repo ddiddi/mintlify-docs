@@ -34,19 +34,19 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Solo Tech",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://www.getsolo.tech/"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://discord.com/invite/8kR5VvATUq"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://getsolotech.substack.com/"
     }
   ],
   "navigation": [
